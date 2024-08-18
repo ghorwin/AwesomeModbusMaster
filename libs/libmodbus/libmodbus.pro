@@ -7,7 +7,7 @@ TEMPLATE = lib
 
 # this pri must be sourced from all our libraries,
 # it contains all functions defined for casual libraries
-include( ../UitCore/UIT.pri )
+include( ../common.pri )
 
 # we want the lib as shared library on Windows
 win32 {

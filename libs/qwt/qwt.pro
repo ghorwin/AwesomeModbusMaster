@@ -7,7 +7,7 @@ TEMPLATE = lib
 
 # this pri must be sourced from all our libraries,
 # it contains all functions defined for casual libraries
-include( ../IBK/IBK.pri )
+include( ../common.pri )
 
 QT += core gui svg printsupport concurrent
 

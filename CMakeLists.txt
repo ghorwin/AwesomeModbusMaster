@@ -133,9 +133,9 @@ add_subdirectory( TinyXMLCodeGenerator/projects/cmake_local TinyXMLCodeGenerator
 # -------------------------------------------------------------
 
 add_subdirectory( externals/qwt/projects/cmake_local qwt )
+add_subdirectory( externals/tinyxml/projects/cmake_local tinyxml )
+add_subdirectory( externals/UitCore/projects/cmake_local UitCore )
 
-# add subdirectories for all builds
-#add_subdirectory( AwesomeModbusMaster/projects/cmake_local AwesomeModbusMaster)
 
 # -------------------------------------------------------------
 # Executables/applications
