@@ -1,0 +1,5 @@
+ (0.9.4-1~jammy~ppa1) jammy; urgency=medium
+
+  * first release for Jammy
+
+ -- Andreas Nicolai <andreas.nicolai@gmx.net>  Thu, 19 May 2022 16:15:10 +0200

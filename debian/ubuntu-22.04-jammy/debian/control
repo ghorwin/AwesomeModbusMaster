@@ -1,0 +1,16 @@
+Source: awesomemodbusmaster
+Section: science
+Priority: optional
+Maintainer: Andreas Nicolai <andreas.nicolai@gmx.net>
+Build-Depends: debhelper-compat (= 13), cmake, qtbase5-dev, libqt5core5a, libqt5concurrent5, libqt5gui5, libqt5network5, libqt5svg5-dev, libqt5widgets5
+Standards-Version: 4.6.0.1
+Homepage: https://ghorwin.github.io/AwesomeModbusMaster/
+Vcs-Git: https://github.com/ghorwin/AwesomeModbusMaster.git
+Vcs-Browser: https://github.com/ghorwin/AwesomeModbusMaster
+Rules-Requires-Root: binary-targets
+
+Package: awesomemodbusmaster
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A Modbus master program with scanning and logging functionality
+ ...to be written ...
