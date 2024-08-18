@@ -15,6 +15,7 @@
 *.so
 *.dylib
 *.dll
+*.exp
 
 # Fortran module files
 *.mod
@@ -30,3 +31,40 @@
 *.exe
 *.out
 *.app
+*.qmake.stash
+Makefile*
+*.pro.user
+*.pyc
+*.pdb
+
+# Mac-specific stuff
+.DS_Store
+
+# misc
+*.tlog
+*.vcxproj.user
+*.~p2
+*.autosave
+object_script.*
+*.png~
+moc_*
+*.debian.tar.xz
+*.dsc
+*source.buildinfo
+*source.changes
+*source.ppa.upload
+*.so.*
+*.TMP
+
+# docu
+*.lyx~
+*.lyx\#
+*.odg\#
+*.ilk
+
+# build
+/build/Qt/.qtc_clangd/
+/build-*/
+/build/Desktop_*/
+/lib/
+*.idx
