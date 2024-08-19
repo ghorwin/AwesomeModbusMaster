@@ -24,19 +24,28 @@ as soon as the connection can be re-established, right)
 ### Target group
 
 - engineers and PLC programmers
-- automatition engineers
+- automation engineers
+- hobbyist/enthusiasts that need a comfortable tools for checking what's going wrong with their Modbus devices
 
+## Documentation
+
+See https://ghorwin.github.io/AwesomeModbusMaster/
 
 ## Download/Installation
 
-- see releases page or download section on webpage
+- see releases page or download section on webpage https://ghorwin.github.io/AwesomeModbusMaster/
 
 ## Building
 
 - cmake build, see scripts in subdirectory `build`
+- development: with Qt Creator, see top level session `.pro` file
+
+## deb package building
+
+- see `debian` directory
 
 ## Licensing
 
-Open-Source tool, free of charge, but feel free to use the _Donate_ button on the webpage.
+Open-Source tool, free of charge, but feel free to use the _Donate_ button on the [webpage](https://ghorwin.github.io/AwesomeModbusMaster).
 
 
