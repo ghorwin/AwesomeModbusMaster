@@ -43,10 +43,6 @@ distribution.
 #define DEBUG
 #endif
 
-// *** CUSTOM EXTENSIONS START
-#include "ticppIBKconfig.h"
-// *** CUSTOM EXTENSIONS END
-
 #ifdef TIXML_USE_STL
 	#include <string>
 	#include <iostream>
