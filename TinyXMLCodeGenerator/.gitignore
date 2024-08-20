@@ -1,0 +1,66 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+.moc/
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.exp
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.qmake.stash
+Makefile*
+*.pro.user
+*.pyc
+*.pdb
+build-*/
+
+# Deployment files
+/bin/debug/translations
+/bin/release/translations
+
+# Mac-specific stuff
+.DS_Store
+
+
+# misc
+*.tlog
+*.vcxproj.user
+*.~p2
+*.autosave
+object_script.*
+
+*.lyx~
+*.lyx\#
+*.odg\#
+*.ilk
+*.tmp
+
+_tmp
+/.qtc_clangd/
+/lib/
+/bin/
