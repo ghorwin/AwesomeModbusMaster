@@ -4,25 +4,28 @@
 #include <QDebug>
 #include <QSplashScreen>
 #include <QTimer>
+#include <QDir>
 
 #include "Directories.h"
 #include "Exception.h"
 #include "MessageHandler.h"
-
-#include "Constants.h"
+#include "LanguageHandler.h"
 #include "Settings.h"
 
+#include "Constants.h"
+#include "DebugApplication.h"
 
 int main(int argc, char *argv[]) {
+
+	// configure directories class
+	Directories::appname 		= "AwesomeModbusMaster";
+	Directories::devdir 		= "AwesomeModbusMaster";
+	Directories::packagename	= "AwesomeModbusMaster"; // Note: not needed, debian package building is not required, yet
 
 	// general appearance properties, must be set before application object is created
 #if QT_VERSION >= 0x050a00 && QT_VERSION < 0x060000
 	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 #endif
-
-	Directories::appname 		= "AwesomeModbusMaster";
-	Directories::devdir 		= "AwesomeModbusMaster";
-	Directories::packagename	= "AwesomeModbusMaster"; // Note: not needed, debian package building is not required, yet
 
 		// We have to do this before our QApplication is initialized
 #if QT_VERSION >= 0x050E00
@@ -63,31 +66,12 @@ int main(int argc, char *argv[]) {
 		settings.setDefaults();
 		settings.read();
 
-		// *** Style Init ***
-
-//		Style style; // constructor sets up most of the initialization
 
 		// *** Install translator ***
-		QtExt::LanguageHandler::instance().setup(SVSettings::instance().m_organization,
-												 SVSettings::instance().m_appName,
-												 "VICUS" );
-		if (argParser.hasOption("lang")) {
-			std::string dummy = argParser.option("lang");
-			QString langid = QString::fromStdString(dummy);
-			if (langid != QtExt::LanguageHandler::instance().langId()) {
-				IBK::IBK_Message( IBK::FormatString("Installing translator for language: '%1'.\n")
-									.arg(langid.toStdString()),
-									IBK::MSG_PROGRESS, FUNC_ID, IBK::VL_STANDARD);
-				QtExt::LanguageHandler::instance().installTranslator(langid);
-			}
-		}
-		else {
-			QtExt::LanguageHandler::instance().installTranslator(QtExt::LanguageHandler::langId());
-		}
-
-		// set default language in IBK MultiLanguageString
-		IBK::MultiLanguageString::m_language = QtExt::LanguageHandler::langId().toStdString();
-
+		LanguageHandler::instance().setup(Settings::instance().m_organization,
+											   Settings::instance().m_appName,
+											   "AwesomeModbusMaster" );
+		LanguageHandler::instance().installTranslator(LanguageHandler::langId());
 
 		// open a scope to control life-time of our main window
 		try {
@@ -101,18 +85,17 @@ int main(int argc, char *argv[]) {
 			qApp->processEvents();
 
 			// MainWindow setup
-			MainWindow w;		// also creates the Database-singleton, so from here on we can use Database::instance()
+			MainWindow w;
 
 			w.show();
 			res = a.exec();
 
-		} catch (Uit::Exception & ex) {
+		} catch (Exception & ex) {
 			ex.writeMsgStackToError();
 			qCritical() << "Exception caught from main window initialization.";
 		}
 		// MainWindow went out of scope and is released
 		// Settings have been written from MainWindow::closeEvent()
-		// MessageHandler
 
 	} // own scope ends here
 

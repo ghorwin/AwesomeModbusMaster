@@ -28,7 +28,7 @@ QT += core gui widgets network
 INCLUDEPATH = \
 	../libs/tinyxml/src \
 	../libs/libmodbus/src \
-	../libs/qwt/src 
+	../libs/qwt/src \
 	src
 
 LIBS += \
@@ -42,12 +42,32 @@ win32 {
 }
 
 SOURCES += \
+	src/Constants.cpp \
+	src/DebugApplication.cpp \
+	src/Directories.cpp \
+	src/Exception.cpp \
+	src/LanguageHandler.cpp \
 	src/MainWindow.cpp \
+	src/MessageHandler.cpp \
+	src/Settings.cpp \
+	src/StringUtils.cpp \
+	src/Style.cpp \
 	src/main.cpp
 
-HEADERS +=  \
-	src/MainWindow.h
+HEADERS += \
+	src/Constants.h \
+	src/DebugApplication.h \
+	src/Directories.h \
+	src/Exception.h \
+	src/LanguageHandler.h \
+	src/MainWindow.h \
+	src/MessageHandler.h \
+	src/Settings.h \
+	src/StringUtils.h \
+	src/Style.h
 
+FORMS += \
+	src/MainWindow.ui
 
 RESOURCES += \
 	resources/AwesomeModbusMaster.qrc
@@ -56,5 +76,3 @@ TRANSLATIONS += resources/translations/AwesomeModbusMaster_de.ts
 
 CODECFORSRC = UTF-8
 
-FORMS += \
-	src/MainWindow.ui
