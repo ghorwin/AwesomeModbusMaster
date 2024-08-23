@@ -4,10 +4,13 @@ on:
   # run nightly at 3:00 am
   schedule:
     - cron: "0 3 * * *"
-  # allow to be triggered on github webpage manually
+
+  # run when triggered manually
   workflow_dispatch:
+  
   # run whenever someone pushes data
-  # WARNING: this may give excessive build times which need to be paid!
+  # WARNING: during development this results in many many unnecessary builds, so it's probably best to leave this
+  #          commented out
 #  push:
 #    branches: [ "master" ]
 #  pull_request:
