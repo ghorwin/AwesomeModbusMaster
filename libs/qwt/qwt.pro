@@ -2,7 +2,7 @@
 # Project for QWT plot library
 # -------------------------------------------------
 
-TARGET = qwt6
+TARGET = qwt
 TEMPLATE = lib
 
 # this pri must be sourced from all our libraries,
