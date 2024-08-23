@@ -8,7 +8,6 @@
 #   [2 [1..n]]					cpu count
 #   [gcc|icc]					compiler
 #   [verbose]					enable cmake to call verbose makefiles
-#   [skip-test]                 does not execute test-init script after successful build
 
 # path export for mac
 export PATH=~/Qt/5.11.3/gcc_64/bin:~/Qt/5.11.3/clang_64/bin:$PATH
@@ -102,8 +101,5 @@ if [ -e $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster.app ]; then
   cp -r $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster.app ../bin/release/AwesomeModbusMaster.app
 fi &&
 
-echo "*** Build AwesomeModbusMaster ***" &&
-if [[ $SKIP_TESTS = "false"  ]]; then
-./run_tests.sh
-fi
+echo "*** Build AwesomeModbusMaster ***"
 
