@@ -21,11 +21,10 @@ configure_file(
 )
 
 # collect a list of all source files of the IBK library
-file( GLOB IBK_LIB_SRCS ${PROJECT_SOURCE_DIR}/../../src/*.cpp )
-SET( IBK_LIB_SRCS ${IBK_LIB_SRCS} )
+file( GLOB LIB_SRCS ${PROJECT_SOURCE_DIR}/../../src/*.cpp )
 
 # build the library
-add_library( IBK STATIC
-	${IBK_LIB_SRCS}
+add_library( ${PROJECT_NAME} STATIC
+	${LIB_SRCS}
 )
 

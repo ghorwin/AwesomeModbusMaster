@@ -30,8 +30,8 @@ if not defined CMAKE_PREFIX_PATH (
 set PATH=%PATH%;%JOM_PATH%
 
 :: create and change into build subdir
-mkdir bb_VC_x64
-pushd bb_VC_x64
+mkdir bb_VC
+pushd bb_VC
 
 :: configure makefiles and build
 cmake -G "NMake Makefiles JOM" .. -DCMAKE_BUILD_TYPE:String="Release"
@@ -41,7 +41,7 @@ if ERRORLEVEL 1 GOTO fail
 popd
 
 :: copy executable to bin/release dir
-xcopy /Y .\bb_VC_x64\AwesomeModbusMaster\AwesomeModbusMaster.exe ..\..\bin\release_x64
+xcopy /Y .\bb_VC\AwesomeModbusMaster\AwesomeModbusMaster.exe ..\bin\release
 
 exit /b 0
 

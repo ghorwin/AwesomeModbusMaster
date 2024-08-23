@@ -13,7 +13,7 @@
 # path export for mac
 export PATH=~/Qt/5.11.3/gcc_64/bin:~/Qt/5.11.3/clang_64/bin:$PATH
 
-CMAKELISTSDIR=$(pwd)
+CMAKELISTSDIR=$(pwd)/..
 BUILDDIR="bb"
 
 # set defaults
@@ -88,18 +88,18 @@ fi
 
 cd $BUILDDIR && cmake $CMAKE_OPTIONS $CMAKE_BUILD_TYPE $CMAKE_COMPILER_OPTIONS $CMAKELISTSDIR && make -j$MAKE_CPUCOUNT &&
 cd $CMAKELISTSDIR &&
-mkdir -p ../../bin/release &&
+mkdir -p ../bin/release &&
 if [ -e $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster ]; then
   echo "*** Copying AwesomeModbusMaster to bin/release ***" &&
-  cp $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster ../../bin/release/AwesomeModbusMaster
+  cp $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster ../bin/release/AwesomeModbusMaster
 fi &&
 # for Mac
 if [ -e $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster.app ]; then
-  if [ -e ../../bin/release/AwesomeModbusMaster.app ]; then
-    rm -rf ../../bin/release/AwesomeModbusMaster.app
+  if [ -e ../bin/release/AwesomeModbusMaster.app ]; then
+    rm -rf ../bin/release/AwesomeModbusMaster.app
   fi &&
   echo "*** Copying AwesomeModbusMaster.app to bin/release ***" &&
-  cp -r $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster.app ../../bin/release/AwesomeModbusMaster.app
+  cp -r $BUILDDIR/AwesomeModbusMaster/AwesomeModbusMaster.app ../bin/release/AwesomeModbusMaster.app
 fi &&
 
 echo "*** Build AwesomeModbusMaster ***" &&
