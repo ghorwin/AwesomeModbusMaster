@@ -12,7 +12,7 @@ When connecting to third-party devices with Modbus interface, often we face the 
 - slave ID is unknown or set to a different value (for example, when the default slave ID had been changed and someone forgot to note the new slave ID...)
 - serial connection settings are unclear (well, manually testing baud rate, parity, stop bits etc. is time consuming, how about letting the software manually scan for a valid combination)
 
-So, main feature of the software is to determine correct modbus settings and find out, which registers are in use, and possibly also the correct encoding of 32-bit/64-bit multi-register values.
+So, main feature of the software is to determine correct modbus settings and find out which registers are in use, and possibly also the correct encoding of 32-bit/64-bit multi-register values.
 
 ### Logging feature
 
@@ -35,14 +35,17 @@ See https://ghorwin.github.io/AwesomeModbusMaster/
 
 - see releases page or download section on webpage https://ghorwin.github.io/AwesomeModbusMaster/
 
-## Building
+## Building and development
 
-- cmake build, see scripts in subdirectory `build`
-- development: with Qt Creator, see top level session `.pro` file
+For automated building (see github actions), use the CMake-based build, preferable run the scripts in subdirectory `build`.
 
-## deb package building
+For development I recommend Qt Creator, open top level session file `AwesomeModbusMaster-session.pro` and simply build and run.
+
+
+### Debian package building
 
 - see `debian` directory
+
 
 ## Licensing
 
