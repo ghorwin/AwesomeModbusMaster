@@ -2,8 +2,8 @@ name: Ubuntu 22.04 Nightly Build
 
 on:
   # run nightly at 3:00 am
-  schedule:
-    - cron: "0 3 * * *"
+  #schedule:
+  #  - cron: "0 3 * * *"
 
   # run when triggered manually
   workflow_dispatch:
