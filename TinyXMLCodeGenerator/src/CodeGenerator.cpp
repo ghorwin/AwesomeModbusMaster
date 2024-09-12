@@ -56,7 +56,7 @@ void CodeGenerator::handleArguments(const char * const argv[]) {
 
 	std::string part;
 
-	// extract ":" separated folders
+	// extract "+" separated folders
 	size_t pos, lastPos;
 	while ( (pos = src_dir.find("+")) != std::string::npos ) {
 		lastPos = 0;
@@ -369,7 +369,7 @@ void CodeGenerator::generateReadWriteCode() {
 				{
 					// for unsigned int, check for invalid ID first, before writing the attribute - we do not want invalid IDs in the project file!
 					if (xmlInfo.typeStr == "IDType") {
-						attribs += "	if (m_"+attribName+" != "+m_prefix+"::INVALID_ID)\n	";
+						attribs += "	if (m_"+attribName+" != CG::INVALID_ID)\n	";
 						includes.insert(m_prefix+"_Constants.h");
 					}
 					// for booleans, check if still default value, otherwise write it out
@@ -467,8 +467,7 @@ void CodeGenerator::generateReadWriteCode() {
 					haveWriteOnlyIfDifferentChecksForElements = true;
 			}
 			if (haveMandatoryIDTag)
-//				writeCode = IBK::replace_string(writeCode, "${MANDATORY_INVALID_ID_CHECK}", "	if (m_id == INVALID_ID)  return nullptr;\n");
-				writeCode = IBK::replace_string(writeCode, "${MANDATORY_INVALID_ID_CHECK}", "	if (m_id == "+ m_namespace + "::INVALID_ID)  return nullptr;\n");
+				writeCode = IBK::replace_string(writeCode, "${MANDATORY_INVALID_ID_CHECK}", "	if (m_id == CG::INVALID_ID)  return nullptr;\n");
 			else
 				writeCode = IBK::replace_string(writeCode, "${MANDATORY_INVALID_ID_CHECK}", "");
 
@@ -486,6 +485,7 @@ void CodeGenerator::generateReadWriteCode() {
 				//   unsigned int with special code that INVALID_ID values are not written
 				// - std::string
 				// - QString
+				// - QStringList
 				// - QDateTime
 				// - QDate
 				// - QTime
@@ -534,6 +534,17 @@ void CodeGenerator::generateReadWriteCode() {
 					elements +=
 							"	if (!m_" + varName + ".isEmpty())\n"
 							"		TiXmlElement::appendSingleAttributeElement(e, \""+tagName+"\", nullptr, std::string(), m_"+varName+".toStdString());\n";
+				}
+				else if (xmlInfo.typeStr == "QStringList") {
+					includes.insert("CodeGen_Utilities.h");
+					// we generate the parent element and afterwards the loop
+					elements +=
+							"	if (!m_" + varName + ".isEmpty()) {\n"
+							"		std::vector<std::string> tmpList;\n"
+							"		for (const QString & s : m_"+varName+")\n"
+							"			tmpList.push_back(s.toStdString());\n"
+							"		CODEGEN::writeVector(e, \""+tagName+"\", tmpList);\n"
+							"	}\n";
 				}
 				else if (xmlInfo.typeStr == "QDateTime") {
 					elements +=
@@ -658,12 +669,12 @@ void CodeGenerator::generateReadWriteCode() {
 
 						elements += "\n"
 							"	for (int i=0; i<"+numType+"; ++i) {\n"
-							"		if (m_"+varName+"[i] != "+m_prefix+"::INVALID_ID)\n	"
+							"		if (m_"+varName+"[i] != CG::INVALID_ID)\n	"
 							"			TiXmlElement::appendSingleAttributeElement(e, KeywordList::Keyword(\""+ keywordCategoryName + "\",  i), nullptr, std::string(), IBK::val2string<unsigned int>(m_"+varName+"[i]));\n"
 							"	}\n";
 					}
 					else {
-						elements += "	if (m_"+varName+" != "+m_prefix+"::INVALID_ID)\n	"
+						elements += "	if (m_"+varName+" != CG::INVALID_ID)\n	"
 									"		TiXmlElement::appendSingleAttributeElement(e, \""+tagName+"\", nullptr, std::string(), IBK::val2string<unsigned int>(m_"+varName+"));\n";
 						includes.insert(m_prefix+"_Constants.h");
 					}
@@ -1180,6 +1191,18 @@ void CodeGenerator::generateReadWriteCode() {
 							"				m_"+varName+" = QString::fromStdString(c->GetText());\n";
 						handledVariables.insert(varName);
 					}
+					else if (xmlInfo.typeStr == "QStringList") {
+						includes.insert("CodeGen_Utilities.h");
+						elements +=
+							"			"+elseStr+"if (cName == \""+tagName+"\") {\n"
+							"				std::vector<std::string> tmpList;\n"
+							"				CODEGEN::readVector(c, \""+tagName+"\", tmpList);\n"
+							"				m_"+varName+".clear();\n"
+							"				for (const std::string & s : tmpList)\n"
+							"					m_"+varName+".append(QString::fromStdString(s) );\n"
+							"			}\n";
+						handledVariables.insert(varName);
+					}
 					else if (xmlInfo.typeStr == "QDateTime") {
 						elements +=
 							"			"+elseStr+"if (cName == \""+tagName+"\")\n"
@@ -1356,7 +1379,7 @@ void CodeGenerator::generateReadWriteCode() {
 										"					ptype = ("+einfo.enumType()+")KeywordList::Enumeration(\""+einfo.categoryName+"\", p.name);\n"
 										"					m_"+varName2+"[ptype] = p; success = true;\n"
 										"				}\n"
-										"				catch (...) { /* intentional fail */  }\n";
+										"				catch (...) { /* intentional fail */  }\n"
 										"				if (success) {\n"
 										"					std::string refUnit = KeywordList::Unit(\""+einfo.categoryName+"\", ptype);\n"
 										"					if (!refUnit.empty() && (p.IO_unit.base_id() != IBK::Unit(refUnit).base_id())) {\n"

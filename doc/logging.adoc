@@ -1,0 +1,46 @@
+# Datenabruf und Aufzeichnung
+
+## Konfiguration
+
+Anwender definiert Verbindung (oder übernimmt die vom Scan):
+
+- ModbusRTU oder ModbusTCP 
+- Verbindungseinstellungen
+
+
+Anwender definiert Modbus-Anfragen (oder übernimmt die vom Scan):
+
+Allgemein: default polling interval
+
+- Slave ID
+- Function Code und Start Register 
+- oder PLC Adresse
+- Datatype und Encoding (Ergibt zusammen mit Count die Anzahl der Register)
+- Count
+- Polling-Interval (leer = default)
+- Bezeichner oder Feld von Bezeichnern (je nach Count)
+
+
+## Darstellung
+
+- Tabelle mit allen definierten Werten und den ausgelesenen Daten (+ Rohwerte in Registern)
+- Trendgrafiken
+
+
+## Logging
+
+Definition durch:
+- Basis-Verzeichnis
+- Daten werden abgelegt als CSV - gruppiert nach Polling-Interval (per Default eine Datei), mit CSV Options "Separator" und "englische/deutsche" Zahlen
+- Spaltenbeschriftungen konfigurierbar, default "${description}", Platzhalter:
+	- ${description}
+	- ${offset}
+	- ${FC}
+	- ${PLC}
+	- ${type}
+
+Aktivieren durch Schaltfläche "Logging an/aus"
+
+
+
+

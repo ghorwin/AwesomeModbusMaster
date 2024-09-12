@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QDebug>
 
-#include "Exception.h"  // for FUNC_ID macro
+#include <IBK_Exception.h> // for FUNC_ID macro
 
 // You need to set values to these variables early on in your main.cpp
 QString Directories::appname;			// for example "MasterSim"

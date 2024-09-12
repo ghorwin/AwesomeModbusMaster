@@ -7,7 +7,7 @@ A cross-plattform Modbus master (client) with register scanning and logging func
 
 When connecting to third-party devices with Modbus interface, often we face the problem of inaccurate/incomplete specifications, for example:
 
-- mixup of PLC addresses like (Register 40351) and Modbus address 0350 with function code 03  (off-by-one error, as PLC addresses are 1-based, wheres Modbus register count starts with 0)
+- mixup of PLC addresses like (Register 40351) and Modbus address/offset 0350 with function code 03  (off-by-one error, as PLC addresses are 1-based, wheres Modbus register count starts with 0)
 - mixup/invalid coding for 32-bit types, for example specs say _float 32-bit little endian byte swap_  but in fact we get "Float cdab" encoding
 - slave ID is unknown or set to a different value (for example, when the default slave ID had been changed and someone forgot to note the new slave ID...)
 - serial connection settings are unclear (well, manually testing baud rate, parity, stop bits etc. is time consuming, how about letting the software manually scan for a valid combination)

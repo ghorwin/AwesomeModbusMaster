@@ -24,3 +24,5 @@ TinyXMLCodeGenerator.depends = IBK
 
 # library dependencies
 
+
+tinyxml.depends = IBK

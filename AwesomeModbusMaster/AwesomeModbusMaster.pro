@@ -29,9 +29,11 @@ INCLUDEPATH = \
 	../libs/tinyxml/src \
 	../libs/libmodbus/src \
 	../libs/qwt/src \
+	../libs/IBK/src \
 	src
 
 LIBS += \
+	-lIBK \
 	-lqwt \
 	-ltinyxml \
 	-llibmodbus
@@ -42,6 +44,10 @@ win32 {
 }
 
 SOURCES += \
+	src/AMM_Config.cpp \
+	src/AMM_ModbusConfig.cpp \
+	src/CodeGen_Constants.cpp \
+	src/CodeGen_Utilities.cpp \
 	src/Constants.cpp \
 	src/DebugApplication.cpp \
 	src/Directories.cpp \
@@ -52,9 +58,19 @@ SOURCES += \
 	src/Settings.cpp \
 	src/StringUtils.cpp \
 	src/Style.cpp \
+	src/cg/cg_AMM_KeywordList.cpp \
+	src/cg/cg_AMM_ModbusConfig.cpp \
+	src/cg/cg_AMM_ModbusConnection.cpp \
 	src/main.cpp
 
 HEADERS += \
+	src/AMM_Config.h \
+	src/AMM_KeywordList.h \
+	src/AMM_ModbusConfig.h \
+	src/AMM_ModbusConnection.h \
+	src/CodeGen_Constants.h \
+	src/CodeGen_Macros.h \
+	src/CodeGen_Utilities.h \
 	src/Constants.h \
 	src/DebugApplication.h \
 	src/Directories.h \

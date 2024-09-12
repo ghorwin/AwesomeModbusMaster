@@ -13,6 +13,11 @@ CONFIG += static
 CONFIG += console
 CONFIG -= qt
 
+LIBS += -lIBK
+
+INCLUDEPATH = \
+	../IBK/src
+
 HEADERS += \
 	src/tinystr.h \
 	src/tinyxml.h

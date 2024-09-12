@@ -1,0 +1,28 @@
+# Daten an Modbus-Slave senden
+
+## Konfiguration
+
+Nutzer definiert einzelnen Schreibbefehle (oder Übername aus Logging, wobei für jeden Wert ein einzelner Abruf definiert wird):
+
+- Verbindung
+- Register
+- Datentyp
+
+## Anzeige 
+
+- Tabelle mit Werten wie bei Logging, bei Read/Write-Werten wird der aktuelle Live-Wert angezeigt, wie beim Logging
+- Doppelklick auf Zellwerte erlaubt Bearbeitung des Schreibbefehls 
+
+## Werte
+
+Auswahl:
+- Einzelwert
+- Zufallswert im Bereich
+- Toggle: Wert1 und Wert2, High/Low oder Low/High Toggle
+
+Wiederholung:
+- Frequenz
+
+Aktivierung mit "Einmal senden" oder "Senden an/aus"
+
+

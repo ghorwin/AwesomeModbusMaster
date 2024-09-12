@@ -1,13 +1,13 @@
 /*!
 
-TinyXMLCodeGenerator - creates NANDRAD_KeywordList.cpp and class-specific implementation files
-This file is based on the SIM-VICUS project. See LICENSE file for details.
+NandradCodeGenerator - creates NANDRAD_KeywordList.cpp and class-specific implementation files
+This file is part of the SIM-VICUS project. See LICENSE file for details.
 
-Authors: Andreas Nicolai <andreas.nicolai@gmx.net>
+Authors: Andreas Nicolai @ IBK/TU-Dresden
 
 Example syntax:
 
-	> TinyXMLCodeGenerator NANDRAD /path/to/NANDRAD/src 0 NANDRAD ncg
+	> NandradCodeGenerator NANDRAD /path/to/NANDRAD/src 0 NANDRAD ncg
 
 */
 

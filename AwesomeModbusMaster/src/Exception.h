@@ -6,8 +6,6 @@
 #include <stdexcept>
 #include <list>
 
-#include "Constants.h"
-
 /*! Wrapper class that stores not only exception message, but also location and allows
 	collection of exception stacks.
 
