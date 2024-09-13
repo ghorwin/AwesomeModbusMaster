@@ -16,6 +16,7 @@ extern const char * const LONG_VERSION;
 
 /*! Manual URL. */
 extern const char * const MANUAL_URL;
+extern const char * const NEWS_FILE_URL;
 
 /*! A define that generates a consistent function signature for debugging/logger outputs.
 

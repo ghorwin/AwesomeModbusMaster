@@ -176,6 +176,9 @@ public:
 	/*! The version number stored during last run (used to detect version changes). */
 	QString						m_lastVersionNumber;
 
+	/*! The file type extension. */
+	QString						m_projectFileSuffix = ".ammxml";
+
 	/*! Map of do-not-show-again dialog IDs and their checked states. */
 	QMap<QString, bool>			m_doNotShowAgainDialogs;
 

@@ -14,6 +14,8 @@
 #include <QColor>
 #include <QtCore/QLoggingCategory>
 
+#include "Settings.h"
+
 Q_LOGGING_CATEGORY(lcUitStyle, "core.style")
 
 void Style::setStyle(ThemeType theme) {
@@ -211,3 +213,33 @@ void Style::resetErrorStateLineEdit(QLineEdit * lineEdit, bool clearToolTip) con
 		lineEdit->setPalette(QPalette());
 }
 
+
+void Style::setHtmlColors(QString & htmlCode) {
+	switch (m_theme) {
+		case TT_Dark :
+		{
+			htmlCode.replace("${STYLE_TEXT_COLOR}", "#F0F0F0");
+			htmlCode.replace("${STYLE_BACKGROUND_COLOR}", "#212124");
+			htmlCode.replace("${STYLE_LINKTEXT_COLOR}", "#ffbf14");
+			htmlCode.replace("${STYLE_LINKTEXT_HOVER_COLOR}", "#ffffff");
+			htmlCode.replace("${STYLE_LINKTEXT_HOVER_BACKGROUND_COLOR}", "#19232D");
+			htmlCode.replace("${STYLE_H1_COLOR}", "#ff7e16");
+			htmlCode.replace("${STYLE_H2_COLOR}", "#ff5b1a");
+			htmlCode.replace("${STYLE_H3_COLOR}", "#ff5b1a");
+		} break;
+
+		case TT_Normal :
+		default:
+		{
+			htmlCode.replace("${STYLE_TEXT_COLOR}", qApp->palette().color(QPalette::Text).name());
+			htmlCode.replace("${STYLE_BACKGROUND_COLOR}", qApp->palette().color(QPalette::Background).name());
+			htmlCode.replace("${STYLE_LINKTEXT_COLOR}", "#0053A6");
+			htmlCode.replace("${STYLE_LINKTEXT_HOVER_COLOR}", "#1C7DEF");
+			htmlCode.replace("${STYLE_LINKTEXT_HOVER_BACKGROUND_COLOR}", qApp->palette().color(QPalette::Background).name());
+			htmlCode.replace("${STYLE_H1_COLOR}", "#003264");
+			htmlCode.replace("${STYLE_H2_COLOR}", "#0069A8");
+			htmlCode.replace("${STYLE_H3_COLOR}", "#00660F");
+		} break;
+	}
+
+}

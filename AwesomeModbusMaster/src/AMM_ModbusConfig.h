@@ -17,7 +17,7 @@ class ModbusConfig {
 public:
 	CODEGEN_READWRITE
 
-	/*! Supported data types. */
+	/*! Supported data types and their individual encodings (byte ordering with respect to Modbus big endian protocol). */
 	enum DataType {
 		DT_bit,					// Keyword: bit
 		DT_char,				// Keyword: char

@@ -10,7 +10,7 @@
 
 namespace AMM {
 
-/*! Contains all data for a Modbus logging configuration. */
+/*! Contains all data for a Modbus logging configuration (the 'project' file of the application). */
 class Config {
 	CODEGEN_READWRITE_PRIVATE
 public:
@@ -28,8 +28,11 @@ public:
 	void writeXML(const QString & filename) const;
 
 
+	QString				m_created;				// XML:A
+	QString				m_lastModified;			// XML:A
+
 	/*! Interface parameters */
-	ModbusConnection	m_modbusConnection;
+	ModbusConnection	m_modbusConnection;		// XML:E
 };
 
 

@@ -46,6 +46,7 @@ win32 {
 SOURCES += \
 	src/AMM_Config.cpp \
 	src/AMM_ModbusConfig.cpp \
+	src/ClickableLabel.cpp \
 	src/CodeGen_Constants.cpp \
 	src/CodeGen_Utilities.cpp \
 	src/Constants.cpp \
@@ -53,11 +54,17 @@ SOURCES += \
 	src/Directories.cpp \
 	src/Exception.cpp \
 	src/LanguageHandler.cpp \
+	src/LogFileDialog.cpp \
+	src/LogWidget.cpp \
 	src/MainWindow.cpp \
 	src/MessageHandler.cpp \
+	src/ProjectHandler.cpp \
 	src/Settings.cpp \
 	src/StringUtils.cpp \
 	src/Style.cpp \
+	src/UndoCommandBase.cpp \
+	src/UndoModifyProject.cpp \
+	src/WelcomeScreen.cpp \
 	src/cg/cg_AMM_KeywordList.cpp \
 	src/cg/cg_AMM_ModbusConfig.cpp \
 	src/cg/cg_AMM_ModbusConnection.cpp \
@@ -68,6 +75,7 @@ HEADERS += \
 	src/AMM_KeywordList.h \
 	src/AMM_ModbusConfig.h \
 	src/AMM_ModbusConnection.h \
+	src/ClickableLabel.h \
 	src/CodeGen_Constants.h \
 	src/CodeGen_Macros.h \
 	src/CodeGen_Utilities.h \
@@ -76,14 +84,22 @@ HEADERS += \
 	src/Directories.h \
 	src/Exception.h \
 	src/LanguageHandler.h \
+	src/LogFileDialog.h \
+	src/LogWidget.h \
 	src/MainWindow.h \
 	src/MessageHandler.h \
+	src/ProjectHandler.h \
 	src/Settings.h \
 	src/StringUtils.h \
-	src/Style.h
+	src/Style.h \
+	src/UndoCommandBase.h \
+	src/UndoModifyProject.h \
+	src/WelcomeScreen.h
 
 FORMS += \
-	src/MainWindow.ui
+	src/LogFileDialog.ui \
+	src/MainWindow.ui \
+	src/WelcomeScreen.ui
 
 RESOURCES += \
 	resources/AwesomeModbusMaster.qrc

@@ -12,3 +12,4 @@ const char * const VERSION = "0.9";
 const char * const LONG_VERSION = "0.9.0";
 
 const char * const MANUAL_URL	= "https://ghorwin.github.io/AwesomeModbusMaster/";
+const char * const NEWS_FILE_URL	= "https://ghorwin.github.io/AwesomeModbusMaster/news.html";

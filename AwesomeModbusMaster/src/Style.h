@@ -52,6 +52,8 @@ public:
 	/*! Returns column width to be used at least for a given string. */
 	unsigned int columnWidth(const QString & s) const;
 
+	void setHtmlColors(QString & htmlCode);
+
 	QString				m_styleSheet;
 
 	QColor				m_colorLogProgressText;
@@ -84,6 +86,8 @@ public:
 	unsigned int		m_viewRowHeight;
 	unsigned int		m_viewFontPointSize;
 	unsigned int		m_dayBookingTableColumnWidth;
+
+	ThemeType			m_theme = TT_Normal;
 };
 
 
