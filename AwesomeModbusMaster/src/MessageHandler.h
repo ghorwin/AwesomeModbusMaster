@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMutex>
 
+#include <IBK_MessageHandler.h>
+
 class QFile;
 
 /*! When instantiated, this class installs a new message handler for usage with qDebug() and similar.
@@ -12,8 +14,10 @@ class QFile;
 
 	Use qCDebug(logCategory) and similar functions. If you want logfile output, open log file with openLogFile()
 	and set the requestedLogFileVerbosity > 0.
+
+	This object also catches messages from the IBK library and handles them just like the Qt messages.
 */
-class MessageHandler : public QObject {
+class MessageHandler : public QObject, public IBK::MessageHandler {
 	Q_OBJECT
 public:
 	/*! Returns the instance of the message handler singleton. */
@@ -21,6 +25,9 @@ public:
 
 	explicit MessageHandler(QObject *parent = nullptr, bool enableUtf8OutputOnWindows=true);
 	virtual ~MessageHandler() override;
+
+	/*! Handler function for IBK::IBK_message() calls. */
+	void msg(const std::string & msgText, IBK::msg_type_t t, const char * func_id, int verbose_level) override;
 
 	/*! Create/open log file. Closes any previously opened logfiles.
 		You can use this function to recreate a log file from scratch if it grows too large.
@@ -30,7 +37,7 @@ public:
 							it will be opened in truncation mode.
 		\return Returns true if logfile was successfully opened for writing, otherwise false.
 	*/
-	bool openLogFile(const QString & logFilePath, bool append);
+	bool openLogFile(const std::string & logFilename, bool append, std::string & errmsg) override;
 
 	/*! This function is called when qDebug(), qWarning() etc is used in the code. */
 	virtual void msg(const QtMsgType type, const QMessageLogContext &context, const QString &msg);
@@ -111,6 +118,7 @@ private:
 	unsigned int					m_originalConsoleCP;
 	bool							m_enableUtf8OutputOnWindows;
 #endif
+
 };
 
 

@@ -49,6 +49,7 @@ SOURCES += \
 	src/ClickableLabel.cpp \
 	src/CodeGen_Constants.cpp \
 	src/CodeGen_Utilities.cpp \
+	src/ConnectionSettings.cpp \
 	src/Constants.cpp \
 	src/DebugApplication.cpp \
 	src/Directories.cpp \
@@ -56,6 +57,7 @@ SOURCES += \
 	src/LanguageHandler.cpp \
 	src/LogFileDialog.cpp \
 	src/LogWidget.cpp \
+	src/MainContentWindow.cpp \
 	src/MainWindow.cpp \
 	src/MessageHandler.cpp \
 	src/ProjectHandler.cpp \
@@ -79,6 +81,7 @@ HEADERS += \
 	src/CodeGen_Constants.h \
 	src/CodeGen_Macros.h \
 	src/CodeGen_Utilities.h \
+	src/ConnectionSettings.h \
 	src/Constants.h \
 	src/DebugApplication.h \
 	src/Directories.h \
@@ -86,6 +89,7 @@ HEADERS += \
 	src/LanguageHandler.h \
 	src/LogFileDialog.h \
 	src/LogWidget.h \
+	src/MainContentWindow.h \
 	src/MainWindow.h \
 	src/MessageHandler.h \
 	src/ProjectHandler.h \
@@ -97,7 +101,9 @@ HEADERS += \
 	src/WelcomeScreen.h
 
 FORMS += \
+	src/ConnectionSettings.ui \
 	src/LogFileDialog.ui \
+	src/MainContentWindow.ui \
 	src/MainWindow.ui \
 	src/WelcomeScreen.ui
 

@@ -6,6 +6,8 @@
 #include <QTimer>
 #include <QDir>
 
+#include <IBK_MessageHandlerRegistry.h>
+
 #include "Directories.h"
 #include "Exception.h"
 #include "MessageHandler.h"
@@ -14,6 +16,7 @@
 
 #include "Constants.h"
 #include "DebugApplication.h"
+
 
 int main(int argc, char *argv[]) {
 
@@ -51,15 +54,13 @@ int main(int argc, char *argv[]) {
 		// *** Create log file directory and setup message handler ***
 		QDir baseDir;
 		baseDir.mkpath(Directories::userDataDir());
-		// Install our own Message Handler
+
+		// *** Message Handler ***
 		// - log file will be opened when settings have been read
 		// - log window will be set when configured in settings and created in MainWindow
 		MessageHandler msgHandler;
 		msgHandler.m_verbosityLevelLogfile = 4; // all in logfile
-		if (!msgHandler.openLogFile(Directories::globalLogFile(), false)) {
-			qCritical() << "Cannot open logfile:" << Directories::globalLogFile();
-			return EXIT_FAILURE;
-		}
+		IBK::MessageHandlerRegistry::instance().setMessageHandler(&msgHandler);
 
 		// *** Create and initialize setting object of the application ***
 		Settings settings(ORG_NAME, PROGRAM_NAME);

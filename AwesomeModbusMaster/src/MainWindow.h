@@ -11,6 +11,7 @@ class QUndoCommand;
 class QUndoStack;
 class LogWidget;
 class WelcomeScreen;
+class MainContentWindow;
 
 #include "ProjectHandler.h"
 
@@ -76,8 +77,8 @@ private slots:
 	*/
 	void onOpenProjectByFilename(const QString & filename);
 
-
-	void on_radioButtonModbusTCP_toggled(bool checked);
+	/*! To remember dock widget visibility state. */
+	void onDockWidgetToggled(bool);
 
 	// all menu action slots below
 
@@ -98,7 +99,7 @@ private:
 	*/
 	static MainWindow			*m_self;
 
-	Ui::MainWindow *m_ui;
+	Ui::MainWindow				*m_ui;
 
 	/*! The global undo stack in the program. */
 	QUndoStack					*m_undoStack											= nullptr;
@@ -112,9 +113,13 @@ private:
 	/*! The welcome screen. */
 	WelcomeScreen				*m_welcomeScreen										= nullptr;
 
+	/*! The actual content of the application. */
+	MainContentWindow			*m_mainContentWindow									= nullptr;
+
 	QAction						*m_undoAction											= nullptr;
 	QAction						*m_redoAction											= nullptr;
 
+	/*! Dock widget with the log. */
 	QDockWidget					*m_logDockWidget										= nullptr;
 	LogWidget					*m_logWidget											= nullptr;
 

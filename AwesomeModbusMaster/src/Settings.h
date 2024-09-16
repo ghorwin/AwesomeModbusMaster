@@ -187,6 +187,9 @@ public:
 	*/
 	QMap<QString, QMessageBox::StandardButton>	m_doNotShowAgainDialogAnswers;
 
+	/*! Holds information on whether log widget is visible or not. */
+	bool						m_logWidgetVisible = true;
+
 private:
 	/*! The global pointer to the Settings object.
 		This pointer is set in the constructor, and cleared in the destructor.

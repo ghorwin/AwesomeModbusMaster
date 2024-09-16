@@ -144,6 +144,31 @@ MessageHandler::~MessageHandler() {
 }
 
 
+void MessageHandler::msg(const std::string & msgText, IBK::msg_type_t t, const char * func_id, int /*verbose_level*/) {
+	// forward call to our own msg function
+	QMessageLogContext context;
+	context.function = func_id;
+	QtMsgType msgType;
+	switch (t) {
+		case IBK::MSG_PROGRESS:
+		case IBK::MSG_CONTINUED:
+			msgType = QtInfoMsg;
+		break;
+		case IBK::MSG_WARNING:
+			msgType = QtWarningMsg;
+		break;
+		case IBK::MSG_ERROR:
+			msgType = QtCriticalMsg;
+		break;
+		case IBK::MSG_DEBUG:
+			msgType = QtDebugMsg;
+		break;
+	}
+
+	msg(msgType, context, QString::fromStdString(msgText));
+}
+
+
 void MessageHandler::msg(const QtMsgType type, const QMessageLogContext & context, const QString & msg) {
 
 	// manually filter out bogus warning message from Qt about  QWindowsWindow::setGeometry
@@ -266,8 +291,8 @@ QString MessageHandler::stripQuotes(const QString & msg) {
 }
 
 
-bool MessageHandler::openLogFile(const QString & logFilePath, bool append) {
-
+bool MessageHandler::openLogFile(const std::string & logFilename, bool append, std::string &) {
+	QString logFilePath = QString::fromStdString(logFilename);
 	if (logFilePath.isEmpty())
 		return true;
 
@@ -300,6 +325,8 @@ bool MessageHandler::openLogFile(const QString & logFilePath, bool append) {
 			return false;
 		}
 	}
+
+	// Note: we close the logfile on purpose here, so that we can access/delete the logfile while the application is running
 	return true;
 }
 
@@ -373,4 +400,6 @@ void MessageHandler::printErrorUtf8(const std::string & utf8) {
 #endif
 	std::cerr.flush();
 }
+
+
 

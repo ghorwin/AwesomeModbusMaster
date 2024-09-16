@@ -102,6 +102,7 @@ void Settings::read() {
 	m_userLogLevelLogfile = settings.value("UserLogLevelLogfile", m_userLogLevelLogfile ).toInt();
 
 	m_dontUseNativeDialogs = settings.value("DontUseNativeDialogs", m_dontUseNativeDialogs ).toBool();
+	m_logWidgetVisible = settings.value("LogWidgetVisible", m_logWidgetVisible).toBool();
 
 	int count = settings.beginReadArray("DoNotShowAgainDialogs");
 	for (int i=0; i<count; ++i) {
@@ -129,12 +130,13 @@ void Settings::read() {
 	QLoggingCategory::setFilterRules("core.*.debug=false\n"
 									 "smtpclient.debug=false");
 
-	// *** Message Handler Log File ***
-
-	// setup log file if configured; for now, always truncate
-	// if log level is 0 for logfile, no logfile is being created
-	if (!MessageHandler::instance().openLogFile(Directories::globalLogFile(), false)) {
-		qCritical() << QString("Error creating logfile '%1'").arg(Directories::globalLogFile());
+	// *** Message Handler log file
+	std::string errmsg;
+	if (!MessageHandler::instance().openLogFile(Directories::globalLogFile().toStdString(), false, errmsg)) {
+		qCritical() << "Cannot open logfile:" << Directories::globalLogFile();
+	}
+	else {
+		qDebug() << "Started writing log file:" << Directories::globalLogFile();
 	}
 }
 
@@ -164,6 +166,7 @@ void Settings::write(QByteArray geometry, QByteArray state) {
 	settings.setValue("UserLogLevelLogfile", m_userLogLevelLogfile);
 
 	settings.setValue("DontUseNativeDialogs", m_dontUseNativeDialogs );
+	settings.setValue("LogWidgetVisible", m_logWidgetVisible );
 
 	settings.setValue("MainWindowGeometry", geometry);
 	settings.setValue("MainWindowState", state);

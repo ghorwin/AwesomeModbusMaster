@@ -4,6 +4,8 @@
 #include <QFileInfo>
 #include <QCloseEvent>
 #include <QTimer>
+#include <QHBoxLayout>
+#include <QDockWidget>
 
 #include <IBK_messages.h>
 
@@ -12,6 +14,7 @@
 #include "LogWidget.h"
 #include "MessageHandler.h"
 #include "WelcomeScreen.h"
+#include "MainContentWindow.h"
 
 MainWindow * MainWindow::m_self = nullptr;
 
@@ -25,10 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_self = this;
 
 	m_ui->setupUi(this);
-
-	m_ui->gridLayoutTCP->setMargin(0);
-	m_ui->gridLayoutRTU->setMargin(0);
-	on_radioButtonModbusTCP_toggled(true);
 
 	// rest of initialization is done in setup()
 	QTimer::singleShot(0, this, &MainWindow::setup);
@@ -131,7 +130,8 @@ void MainWindow::closeEvent(QCloseEvent * event) {
 //	m_threadPool[0]->wait(1000);
 
 	// store view settings
-//	Settings::instance().m_...
+	// store list of visible dock widgets
+	QStringList dockWidgetVisibility;
 
 	// save user config and recent file list
 	Settings::instance().write(saveGeometry(), saveState());
@@ -141,11 +141,6 @@ void MainWindow::closeEvent(QCloseEvent * event) {
 
 
 void MainWindow::setup() {
-	// setup log widget already, so that error messages resulting from initialization errors are already
-	// send to the log widget even before the actual dock widget for the log has been created
-	m_logWidget = new LogWidget(this);
-	MessageHandler * msgHandler = dynamic_cast<MessageHandler *>(IBK::MessageHandlerRegistry::instance().messageHandler());
-	connect(msgHandler, &MessageHandler::msgReceived, m_logWidget, &LogWidget::onMsgReceived);
 
 	// *** setup welcome widget ***
 
@@ -170,12 +165,40 @@ void MainWindow::setup() {
 	connect(&m_projectHandler, &ProjectHandler::updateRecentProjects, this, &MainWindow::onUpdateRecentProjects);
 
 
+	// *** Main content widget
+
+	m_mainContentWindow = new MainContentWindow(this);
+	mainLayout->addWidget(m_mainContentWindow);
+
+	// *** Log dock widget ***
+
+	m_logWidget = new LogWidget(this);
+	MessageHandler * msgHandler = dynamic_cast<MessageHandler *>(IBK::MessageHandlerRegistry::instance().messageHandler());
+	connect(msgHandler, &MessageHandler::msgReceived, m_logWidget, &LogWidget::onMsgReceived);
+
+	QDockWidget::DockWidgetFeature titleBarOption = QDockWidget::NoDockWidgetFeatures;
+	m_logDockWidget = new QDockWidget(this);
+	m_logDockWidget->setObjectName("LogDockWidget");
+	m_logDockWidget->setContentsMargins(0,0,0,0);
+	m_logDockWidget->setWindowTitle(tr("Application Log"));
+	m_logDockWidget->setFeatures(QDockWidget::AllDockWidgetFeatures | titleBarOption);
+	m_logDockWidget->setAllowedAreas(Qt::BottomDockWidgetArea);
+	QAction * toggleAction = m_logDockWidget->toggleViewAction();
+	m_ui->menu_View->addAction(toggleAction);
+	connect(toggleAction, &QAction::toggled, this, &MainWindow::onDockWidgetToggled);
+	m_logDockWidget->setWidget(m_logWidget);
+	addDockWidget(Qt::BottomDockWidgetArea,m_logDockWidget);
+
 	// *** create menu for recent files ***
 
 	m_recentProjectsMenu = new QMenu(this);
 	m_ui->actionFileRecentProjects->setMenu(m_recentProjectsMenu);
 	onUpdateRecentProjects();
 
+	// *** update action status ***
+
+	// update enable/disable state of actions and visibility of welcome or content page
+	onUpdateActions();
 }
 
 
@@ -205,6 +228,16 @@ void MainWindow::onUpdateActions() {
 	// We dont have NO PROJECT
 	if (!have_project) {
 
+		m_welcomeScreen->setVisible(true);
+		m_ui->menuBar->setVisible(false);
+		m_mainContentWindow->setVisible(false);
+
+		// Dock-Widget is only visible when project is there
+		m_logDockWidget->toggleViewAction()->setEnabled(false);
+		m_logDockWidget->toggleViewAction()->blockSignals(true);
+		m_logDockWidget->setVisible(false);
+		m_logDockWidget->toggleViewAction()->blockSignals(false);
+
 		// no project, no undo actions -> clearing undostack also disables undo actions
 		m_undoStack->clear();
 
@@ -217,6 +250,15 @@ void MainWindow::onUpdateActions() {
 
 	// when we have A PROJECT
 	else {
+		// hide welcome screen and show main content window
+		m_welcomeScreen->setVisible(false);
+		m_ui->menuBar->setVisible(true);
+		m_mainContentWindow->setVisible(false);
+
+		m_logDockWidget->toggleViewAction()->setEnabled(true);
+		m_logDockWidget->toggleViewAction()->blockSignals(true);
+		m_logDockWidget->setVisible(Settings::instance().m_logWidgetVisible);
+		m_logDockWidget->toggleViewAction()->blockSignals(false);
 
 		updateWindowTitle();
 
@@ -274,21 +316,29 @@ void MainWindow::onOpenProjectByFilename(const QString & filename) {
 }
 
 
+void MainWindow::onDockWidgetToggled(bool visible) {
+	// get sender
+	QAction * toggleAction = qobject_cast<QAction*>(sender());
+	if (m_logDockWidget->toggleViewAction() == toggleAction) {
+		Settings::instance().m_logWidgetVisible  = visible;
+	}
+}
+
+
 
 // *** private slots ***
 
 
 
-void MainWindow::on_radioButtonModbusTCP_toggled(bool checked) {
-	m_ui->widgetInputRTU->setVisible(!checked);
-	m_ui->widgetInputTCP->setVisible(checked);
-}
-
-
-
-
 void MainWindow::on_actionFileNew_triggered() {
+	// move input focus away from any input fields (to allow editingFinished() events to fire)
+	setFocus();
+	// close project if we have one
+	if (!m_projectHandler.closeProject(this)) // emits updateActions() if project was closed
+		return;
 
+	// create new project
+	m_projectHandler.newProject(); // emits updateActions()
 }
 
 
