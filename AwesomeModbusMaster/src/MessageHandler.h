@@ -42,34 +42,8 @@ public:
 	/*! This function is called when qDebug(), qWarning() etc is used in the code. */
 	virtual void msg(const QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
-	// *** Configuration Properties ***
-
-	/*! Holds level of detail that defines which messages should be printed on the console.
-		0: off, 1: critical/fatal only, 2: +warning, 3: +info, 4: +debug
-	*/
-	unsigned int	m_verbosityLevelConsole = 4;	// by default, print all messages to console
-
-
-	/*! Holds level of detail that defines which messages should be written to logfile.
-		\sa m_verbosityLevelConsole
-	*/
-	unsigned int	m_verbosityLevelLogfile = 2;	// by default, write only messages up to standard level 2
-													// to file (errors, warnings, but no info/debug messages)
-
 	/*! If set to true, the logfile output includes the function signature. */
 	bool			m_includeFuncSignature = false;
-
-	/*! Number of indentation characters for context (file/function signature) string. */
-	unsigned int	m_contextIndentation = 40;
-
-	/*! Time stamp format to be prepended to the message (see QDate::toString() and QTime::toString()).
-		\code
-			m_timeStampFormat = "yyyy-MM-dd hh:mm:ss";
-			// gives: "2000-12-25 07:20:15"
-		\endcode
-		Set to empty time stamp to disable time stamp output in logfile.
-	*/
-	QString			m_timeStampFormat = "yyyy-MM-dd hh:mm:ss";
 
 	/*! If true, colored text will be written into the log window. */
 	bool			m_coloredText = true;

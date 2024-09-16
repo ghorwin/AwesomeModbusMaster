@@ -80,6 +80,7 @@ void Settings::setDefaults() {
 #endif
 
 	m_dontUseNativeDialogs = true;
+	m_style->setStyle(Style::TT_Normal);
 }
 
 

@@ -57,11 +57,15 @@ SOURCES += \
 	src/LanguageHandler.cpp \
 	src/LogFileDialog.cpp \
 	src/LogWidget.cpp \
+	src/LoggingView.cpp \
 	src/MainContentWindow.cpp \
 	src/MainWindow.cpp \
 	src/MessageHandler.cpp \
 	src/ProjectHandler.cpp \
+	src/ReadWriteView.cpp \
+	src/ScanView.cpp \
 	src/Settings.cpp \
+	src/SimulationView.cpp \
 	src/StringUtils.cpp \
 	src/Style.cpp \
 	src/UndoCommandBase.cpp \
@@ -89,11 +93,15 @@ HEADERS += \
 	src/LanguageHandler.h \
 	src/LogFileDialog.h \
 	src/LogWidget.h \
+	src/LoggingView.h \
 	src/MainContentWindow.h \
 	src/MainWindow.h \
 	src/MessageHandler.h \
 	src/ProjectHandler.h \
+	src/ReadWriteView.h \
+	src/ScanView.h \
 	src/Settings.h \
+	src/SimulationView.h \
 	src/StringUtils.h \
 	src/Style.h \
 	src/UndoCommandBase.h \
@@ -103,8 +111,12 @@ HEADERS += \
 FORMS += \
 	src/ConnectionSettings.ui \
 	src/LogFileDialog.ui \
+	src/LoggingView.ui \
 	src/MainContentWindow.ui \
 	src/MainWindow.ui \
+	src/ReadWriteView.ui \
+	src/ScanView.ui \
+	src/SimulationView.ui \
 	src/WelcomeScreen.ui
 
 RESOURCES += \

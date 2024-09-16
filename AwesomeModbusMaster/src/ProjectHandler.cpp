@@ -107,9 +107,6 @@ bool ProjectHandler::newProject(AMM::Config * project) {
 	// signal UI that we now have a project
 	emit updateActions();
 
-	// issue a call to user-dialog fixes/adjustments
-	QTimer::singleShot(0, this, SIGNAL(fixProjectAfterRead()));
-
 	return true;
 }
 
@@ -261,9 +258,6 @@ void ProjectHandler::loadProject(QWidget * parent, QString fileName,	bool silent
 		addToRecentFiles(fileName);
 	} // if (fileName == m_projectFile)
 
-
-	// issue a call to user-dialog fixes/adjustments
-	QTimer::singleShot(0, this, SIGNAL(fixProjectAfterRead()));
 }
 
 
@@ -435,7 +429,7 @@ bool ProjectHandler::read(QWidget * /*parent*/, const QString & fname) {
 }
 
 
-bool ProjectHandler::write(QWidget *parent, const QString & fname) const {
+bool ProjectHandler::write(QWidget */*parent*/, const QString & fname) const {
 	FUNCID(ProjectHandler::write);
 	Q_ASSERT(isValid());
 

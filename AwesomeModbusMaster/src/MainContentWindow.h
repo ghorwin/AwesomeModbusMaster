@@ -7,6 +7,11 @@ namespace Ui {
 class MainContentWindow;
 }
 
+class ScanView;
+class ReadWriteView;
+class LoggingView;
+class SimulationView;
+
 /*! Holds the actual content of the application. */
 class MainContentWindow : public QWidget {
 	Q_OBJECT
@@ -17,6 +22,11 @@ public:
 
 private:
 	Ui::MainContentWindow *m_ui;
+
+	ScanView				*m_scanView			= nullptr;
+	ReadWriteView			*m_readWriteView	= nullptr;
+	LoggingView				*m_loggingView		= nullptr;
+	SimulationView			*m_simulationView	= nullptr;
 };
 
 #endif // MAINCONTENTWINDOW_H

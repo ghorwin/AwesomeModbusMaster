@@ -253,7 +253,7 @@ void MainWindow::onUpdateActions() {
 		// hide welcome screen and show main content window
 		m_welcomeScreen->setVisible(false);
 		m_ui->menuBar->setVisible(true);
-		m_mainContentWindow->setVisible(false);
+		m_mainContentWindow->setVisible(true);
 
 		m_logDockWidget->toggleViewAction()->setEnabled(true);
 		m_logDockWidget->toggleViewAction()->blockSignals(true);

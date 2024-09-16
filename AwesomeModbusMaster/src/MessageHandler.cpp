@@ -120,6 +120,7 @@ MessageHandler::MessageHandler(QObject *parent, bool enableUtf8OutputOnWindows) 
 	// register our message handler wrapper function
 	m_oldMsgHandler = qInstallMessageHandler(msgHandlerWrapper);
 
+	m_timeStampFormat = "yyyy-MM-dd hh:mm:ss"; // for use with QDateTime
 #ifdef _WIN32
 	m_enableUtf8OutputOnWindows = enableUtf8OutputOnWindows;
 	if (enableUtf8OutputOnWindows)
@@ -199,26 +200,26 @@ void MessageHandler::msg(const QtMsgType type, const QMessageLogContext & contex
 
 	QString category = context.category ? context.category : "default"; // actually, category is always set
 	QString messageTypeStr;
-	unsigned int messageVerbosity = 0;
+	IBK::verbosity_levels_t messageVerbosity = IBK::VL_ALL;
 	switch (type) {
-		case QtDebugMsg:	messageTypeStr = "[Debug]";		messageVerbosity = 4; break;
-		case QtInfoMsg:		messageTypeStr = "[Info]";		messageVerbosity = 3; break;
-		case QtWarningMsg:	messageTypeStr = "[Warning]";	messageVerbosity = 2; break;
-		case QtCriticalMsg:	messageTypeStr = "[Critical]";	messageVerbosity = 1; break;
-		case QtFatalMsg:	messageTypeStr = "[Fatal]";		messageVerbosity = 1; break;
+		case QtDebugMsg:	messageTypeStr = "[Debug]";		messageVerbosity = IBK::VL_DETAILED; break;
+		case QtInfoMsg:		messageTypeStr = "[Info]";		messageVerbosity = IBK::VL_INFO; break;
+		case QtWarningMsg:	messageTypeStr = "[Warning]";	messageVerbosity = IBK::VL_STANDARD; break;
+		case QtCriticalMsg:	messageTypeStr = "[Critical]";	messageVerbosity = IBK::VL_ALL; break;
+		case QtFatalMsg:	messageTypeStr = "[Fatal]";		messageVerbosity = IBK::VL_ALL; break;
 	}
 
 	QString timeStamp;
-	if (!m_timeStampFormat.isEmpty()) {
+	if (!m_timeStampFormat.empty()) {
 		QDateTime dt = QDateTime::currentDateTime();
-		timeStamp = dt.toString(m_timeStampFormat);
+		timeStamp = dt.toString(QString::fromStdString(m_timeStampFormat));
 	}
 
 	QString consoleTimeStamp = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
 	// *** screen log ***
 
-	if (m_verbosityLevelConsole >= messageVerbosity) {
+	if (m_requestedConsoleVerbosityLevel >= messageVerbosity) {
 
 		// for screen log we dump out a table-like info in format
 		// [Warning]     short message
@@ -253,9 +254,9 @@ void MessageHandler::msg(const QtMsgType type, const QMessageLogContext & contex
 
 	// *** log file ***
 
-	if (m_verbosityLevelLogfile >= messageVerbosity && !m_logfileName.isEmpty()) {
+	if (m_requestedLogfileVerbosityLevel >= messageVerbosity && !m_logfileName.isEmpty()) {
 		QString logMsg;
-		if (!m_timeStampFormat.isEmpty())
+		if (!m_timeStampFormat.empty())
 			logMsg +=timeStamp + " ";
 		logMsg += QString("%1 %2 %3 %4\n")
 				.arg(messageTypeStr,-12)        // negative field width: left-aligned
@@ -296,7 +297,7 @@ bool MessageHandler::openLogFile(const std::string & logFilename, bool append, s
 	if (logFilePath.isEmpty())
 		return true;
 
-	if (m_verbosityLevelLogfile == 0)
+	if (m_requestedConsoleVerbosityLevel == IBK::VL_SPECIAL)
 		return true; // no log file writing, function ends successfully, though no logfile was opened
 
 	// ensure that callers do not accidentally use relative file path

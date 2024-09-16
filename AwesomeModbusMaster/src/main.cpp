@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 		// - log file will be opened when settings have been read
 		// - log window will be set when configured in settings and created in MainWindow
 		MessageHandler msgHandler;
-		msgHandler.m_verbosityLevelLogfile = 4; // all in logfile
+		msgHandler.setLogfileVerbosityLevel(IBK::VL_ALL); // all in logfile
 		IBK::MessageHandlerRegistry::instance().setMessageHandler(&msgHandler);
 
 		// *** Create and initialize setting object of the application ***

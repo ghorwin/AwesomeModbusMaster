@@ -83,7 +83,7 @@ void LogWidget::showLogFile( const QString & logFilePath ) {
 }
 
 
-void LogWidget::onMsgReceived(int type, QString msgString) {
+void LogWidget::onMsgReceived(const QtMsgType t, QString /*timeStamp*/, QString /*category*/, QString /*context*/, QString msgString) {
 	// avoid empty lines between messages
 	if (msgString.endsWith('\n'))
 		msgString.chop(1);
@@ -92,18 +92,18 @@ void LogWidget::onMsgReceived(int type, QString msgString) {
 
 	QString html = QString("<span style=\"white-space:pre; color:%2\">%1</span>").arg(msgString);
 	// color lines according to message type
-	switch (type) {
-		case IBK::MSG_PROGRESS :
-		case IBK::MSG_CONTINUED :
+	switch (t) {
+		case QtInfoMsg :
 			html = html.arg(Settings::instance().style()->m_colorLogProgressText.name());
 			break;
-		case IBK::MSG_WARNING :
+		case QtWarningMsg :
 			html = html.arg(Settings::instance().style()->m_colorLogWarningText.name());
 			break;
-		case IBK::MSG_ERROR :
+		case QtCriticalMsg :
+		case QtFatalMsg :
 			html = html.arg(Settings::instance().style()->m_colorLogErrorText.name());
 			break;
-		case IBK::MSG_DEBUG :
+		case QtDebugMsg :
 			html = html.arg(Settings::instance().style()->m_colorLogDebugText.name());
 			break;
 	}

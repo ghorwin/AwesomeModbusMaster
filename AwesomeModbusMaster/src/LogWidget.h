@@ -45,7 +45,7 @@ public slots:
 	*/
 	void clear();
 	/*! Connected to message handler, appends the new message to the output (for use in dock widget). */
-	void onMsgReceived(int type, QString msgText);
+	void onMsgReceived(const QtMsgType t, QString timeStamp, QString category, QString context, QString msg);
 
 private:
 	QPlainTextEdit * m_textEdit;
